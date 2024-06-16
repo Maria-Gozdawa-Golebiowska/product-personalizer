@@ -1,8 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Product.module.scss';
 import ProductImage from '../ProductImage/ProductImage';
-import ProductButton from '../ProductForm/ProductForm';
+import ProductForm from '../ProductForm/ProductForm';
 
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
@@ -13,55 +13,52 @@ const Product = (props) => {
     return props.basePrice + currentPrice;
   };
 
-  const cardData ={
+  const cardData = {
     name: props.title,
     price: getPrice(),
     size: currentSize,
     color: currentColor
- }
+  };
 
- return (
-  <article className={styles.product}>
-    <ProductImage
-      title={props.title}
-      name={props.name}
-      color={currentColor}
-    ></ProductImage>
+  return (
+    <article className={styles.product}>
+      <ProductImage
+        title={props.title}
+        name={props.name}
+        color={currentColor}
+      />
 
-    <div>
+      <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
           <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
 
-        <ProductButton
+        <ProductForm
           sizes={props.sizes}
           size={props.size}
           currentSize={currentSize}
           setCurrentSize={setCurrentSize}
-          price={props.currentPrice}
-          additionalPrice={props.additionalPrice}
+          currentPrice={currentPrice}
           setCurrentPrice={setCurrentPrice}
+          basePrice={props.basePrice}
           colors={props.colors}
           currentColor={currentColor}
           setCurrentColor={setCurrentColor}
-          productToBasket={cardData}
-          onClick={props.onClick}
           title={props.title}
-        ></ProductButton>
-
+        />
       </div>
     </article>
   );
 };
 
 Product.propTypes = {
- id: PropTypes.number.isRequired,
- title: PropTypes.string.isRequired,
- basePrice: PropTypes.number.isRequired,
- name: PropTypes.string.isRequired,
- basePrice: PropTypes.number.isRequired
-
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  basePrice: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  colors: PropTypes.array.isRequired,
+  sizes: PropTypes.array.isRequired,
 };
 
 export default Product;
